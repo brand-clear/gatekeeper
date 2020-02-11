@@ -1,2 +1,2 @@
 # gatekeeper
-File-locking mechanism for multi-user applications over network file systems.
+A file-locking mechanism for multi-user applications over a network file system.
