@@ -1,2 +1,2 @@
-# gatekeeper
-A file-locking mechanism for multi-user applications over a network file system.
+# GateKeeper
+A lockfile controller that aims to support multi-user I/O operations over a network file system.
