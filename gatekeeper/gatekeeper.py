@@ -1,21 +1,16 @@
-
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os
 
 
 class GateKeeper(object):
-	"""The GateKeeper Class supports multi-user I/O operations over a network 
-	file system by enforcing a lockfile buffer to sensitive data.
-
-	The I/O operations themselves are to be carried out after acquiring the
-	lockfile (via lock()) and prior to releasing the lockfile to other users
-	(via unlock()).
+	"""
+	A lockfile controller that aims to support multi-user I/O operations over a network file system.
 
 	Parameters
 	----------
 	username : str
-		Unique id that is appended to `lockfile` during a locking
-		operation, signifying ownership.
+		Unique id that is appended to `lockfile` after acquisition.
 	lockfile : str
 		Absolute path to lockfile.
 
@@ -23,6 +18,10 @@ class GateKeeper(object):
 	----------
 	lock_is_acquired
 	owner
+
+	Notes
+	-----
+	I/O operations should be called only after successfully acquiring the lockfile and prior to releasing the lockfile.
 
 	"""
 	def __init__(self, username, lockfile):
@@ -33,25 +32,13 @@ class GateKeeper(object):
 
 	@property
 	def lock_is_acquired(self):
-		"""
-		Returns
-		-------
-		True or None
-			If True, self._username has lockfile ownership.
-
-		"""
+		"""True or None: Confirmation that lockfile is acquired."""
 		if os.path.exists(self._locked_path):
 			return True
 
 	@property
 	def owner(self):
-		"""
-		Returns
-		-------
-		str or None
-			Current lockfile owner.
-
-		"""
+		"""str or None: The lockfile owner."""
 		for f in os.listdir(os.path.dirname(self._locked_path)):
 			if self._filename in f:
 				try:
@@ -64,8 +51,8 @@ class GateKeeper(object):
 		
 		Returns
 		-------
-		True or False
-			Acquisition state.
+		bool
+			An indication of lockfile acquisition success.
 
 		"""
 		try:
@@ -80,8 +67,8 @@ class GateKeeper(object):
 		
 		Returns
 		-------
-		True or False
-			Releasal state.
+		bool
+			An indication of lockfile releasal success.
 			
 		"""
 		try:
@@ -90,7 +77,6 @@ class GateKeeper(object):
 			return False
 		else:
 			return True
-
 
 
 if __name__ == '__main__':
