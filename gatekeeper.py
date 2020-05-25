@@ -7,17 +7,17 @@ class GateKeeper(object):
 	"""
 	A lockfile controller that aims to support multi-user I/O operations over a network file system.
 
+	Attributes
+	----------
+	lock_is_acquired
+	owner
+
 	Parameters
 	----------
 	username : str
 		Unique id that is appended to `lockfile` after acquisition.
 	lockfile : str
 		Absolute path to lockfile.
-
-	Attributes
-	----------
-	lock_is_acquired
-	owner
 
 	Notes
 	-----
