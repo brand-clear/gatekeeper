@@ -1,22 +1,19 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
-GateKeeper test module
+gatekeeper test  module
 
 """
 import os
 import sys
 import unittest
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from gatekeeper import GateKeeper
-
-
-USER = 'brandon'
+from gatekeeper.gatekeeper import GateKeeper
 
 
 class TestGateKeeper(unittest.TestCase):
 
-	# The lock() and unlock() methods are validated through property testing
+	# lock() and unlock() methods are validated through testing dependent
+	# methods. If any dependent method fails, it is likely that lock() or
+	# unlock() is the reason.
 
 	def setUp(self):
 		self.lockfile = os.path.join(
@@ -24,7 +21,7 @@ class TestGateKeeper(unittest.TestCase):
 				'testdir',
 				'lockfile.txt'
 			)
-		self.gk = GateKeeper(USER,	self.lockfile)
+		self.gk = GateKeeper('brandon',	self.lockfile)
 
 	def tearDown(self):
 		self.gk.unlock()
@@ -39,9 +36,9 @@ class TestGateKeeper(unittest.TestCase):
 	def test_owner_returns_none(self):
 		self.assertEqual(self.gk.owner, None)
 
-	def test_owner_returns_user(self):
+	def test_owner_returns_brandon(self):
 		self.gk.lock()
-		self.assertEqual(self.gk.owner, USER)
+		self.assertEqual(self.gk.owner, 'brandon')
 
 
 if __name__ == '__main__':
